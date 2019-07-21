@@ -1,8 +1,8 @@
 # coding=utf-8
 """
 create on : 2019/07/14
-project name : chrome_equalizer
-file name : ChromeVersionChecker 
+project name : chromedriver_update_tool
+file name : ChromeVersionUpdateTool
 
 description : equalize chrome browser and driver version
               if not equal version, download new chrome driver
