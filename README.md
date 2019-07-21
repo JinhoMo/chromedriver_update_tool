@@ -4,6 +4,8 @@
 
 Update chrome driver (for selenium Webdriver) to equalize chrome version
 
+日本語での解説記事は、[こちら](https://hytmachineworks.hatenablog.com/entry/2019/07/21/170501)を参照してください。
+
 ## Requrements
 
 Windows 10, Python3 and some (urllib3, BeautifulSoup4, lxml, certifi(maybe install automatically install urllib3))
@@ -52,7 +54,7 @@ This error indicates, chrome browser version is diffrent from chrome driver supp
 
 And It's the purpase for this script So, I make a script for this problem.
 
-#### 2. How to use
+#### 2. Basic usage
 
 First, clone script from repository
 
@@ -82,3 +84,47 @@ Chrome Browser and Driver update success
 ```
 
 You can makesure updated chrome driver version.
+
+### 3. Advanced usage(for custom environment)
+
+Some setting parameters exists. Please open ChromeVersionChecker.py by texteditor.
+
+#### Parameters below
+
+##### For chromedriver settings
+
+chrome driver dir name
+
+- CHROME_DRIVER_DIR = "C:/SeleniumWebdriver/"
+
+chrome driver zip file name
+
+- CHROME_DRIVER_ZIP = "chromedriver_win32.zip"
+
+chrome driver exe file name
+
+- CHROME_DRIVER_EXE = "chromedriver.exe"
+
+##### For proxy settings
+
+If you want to use proxy, PROXY_MODE set values below by strings
+
+- PROXY_MODE = "default"
+
+  - non auth proxy set value: "http_proxy"
+  - or auth proxy set value: "auth_proxy"
+  - you don't want to set proxy set value "default"
+
+If you using auth proxy, determin username and password divide by :(colon).
+
+- PROXY_BASIC_AUTH = "username:password"
+
+Set your proxy address and port number.
+
+- <div>PROXY_URL_PORT = "http://your.own.proxy.url:8080"<div />
+
+##### For chrome driver site address
+
+If change chrome download site address, please change new address
+
+- <div>CHROME_DRIVER_DL_SITE = "http://chromedriver.chromium.org/downloads/"<div />
