@@ -116,6 +116,12 @@ def check_browser_driver_version():
 
 
 def download_correctly_driver(target_version, proxy):
+    """ download chromedriver correctly version
+
+    :param target_version: chromedriver correctly version string
+    :param proxy: proxy target version stirng
+    :return: result boolean
+    """
     # Search download page
     dl_site_html = get_internet_item(CHROME_DRIVER_DL_SITE, proxy)
 
@@ -154,8 +160,8 @@ def download_correctly_driver(target_version, proxy):
     return True
 
 
-def chromedriver_equalizer(proxy=None):
-    """ equalize chrome browser and driver version
+def chromedriver_update(proxy=None):
+    """ update chrome driver to equalize browser version
 
     :param proxy: if you want to use proxy, set values string
                   non auth proxy set value: "http_proxy"
@@ -196,7 +202,7 @@ def chromedriver_equalizer(proxy=None):
 
 
 def main():
-    result = chromedriver_equalizer()
+    result = chromedriver_update()
 
     if result:
         print("Chrome Browser and Driver equalize OK!!!!!")
