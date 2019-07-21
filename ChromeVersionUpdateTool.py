@@ -22,25 +22,29 @@ CHROME_DRIVER_ZIP = "chromedriver_win32.zip"
 CHROME_DRIVER_EXE = "chromedriver.exe"
 CHROME_DRIVER = CHROME_DRIVER_DIR + CHROME_DRIVER_EXE
 
+# if you want to use proxy, set values by strings
+# non auth proxy set value: "http_proxy"
+# or auth proxy set value: "auth_proxy"
+# you don't want to set proxy set value "default"
+PROXY_MODE = "default"
 PROXY_BASIC_AUTH = "username:password"
 PROXY_URL_PORT = "http://your.own.proxy.url:8080"
 
 CHROME_DRIVER_DL_SITE = "http://chromedriver.chromium.org/downloads/"
 
 
-def get_internet_item(url, proxy=None, html=True):
+def get_internet_item(url, html=True):
     """ get html or data from given url
 
     :param url: target site url string
-    :param proxy: use proxy type string
     :param html: download html or data boolean
     :return: html string
     """
 
-    if proxy == "http_proxy":
+    if PROXY_MODE == "http_proxy":
         http = ProxyManager(PROXY_URL_PORT)
 
-    elif proxy == "auth_proxy":
+    elif PROXY_MODE == "auth_proxy":
         auth_proxy_headers = make_headers(proxy_basic_auth=PROXY_URL_PORT)
         http = ProxyManager(PROXY_URL_PORT, headers=auth_proxy_headers)
 
@@ -113,15 +117,14 @@ def check_browser_driver_version():
     return results
 
 
-def download_correctly_driver(target_version, proxy):
+def download_correctly_driver(target_version):
     """ download chromedriver correctly version
 
     :param target_version: chromedriver correctly version string
-    :param proxy: proxy target version stirng
     :return: result boolean
     """
     # Search download page
-    dl_site_html = get_internet_item(CHROME_DRIVER_DL_SITE, proxy)
+    dl_site_html = get_internet_item(CHROME_DRIVER_DL_SITE)
 
     dl_site_soup = BeautifulSoup(dl_site_html, "lxml")
     main_pain = dl_site_soup.find("td", attrs={"id": "sites-canvas-wrapper"})
@@ -147,7 +150,7 @@ def download_correctly_driver(target_version, proxy):
         return False
 
     # Search download link
-    dl_zip_binary = get_internet_item(driver_zip_url, proxy, html=False)
+    dl_zip_binary = get_internet_item(driver_zip_url, html=False)
 
     with open(CHROME_DRIVER_DIR + CHROME_DRIVER_ZIP, "wb") as dl_zip:
         dl_zip.write(dl_zip_binary)
@@ -158,13 +161,9 @@ def download_correctly_driver(target_version, proxy):
     return True
 
 
-def chromedriver_update(proxy=None):
+def chromedriver_update():
     """ Update chrome driver to equalize chrome version
 
-    :param proxy: if you want to use proxy, set values string
-                  non auth proxy set value: "http_proxy"
-                  or auth proxy set value: "auth_proxy":
-                  you don't want to set proxy set value blank
     :return: process success or not boolean
     """
     check_result = check_browser_driver_version()
@@ -179,7 +178,7 @@ def chromedriver_update(proxy=None):
     chrome_ver = ".".join(check_result["browser_ver"].split(".")[:-1])
 
     try:
-        download_result = download_correctly_driver(chrome_ver, proxy)
+        download_result = download_correctly_driver(chrome_ver)
 
     except ConnectionError as error:
         print(error)
