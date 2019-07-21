@@ -24,7 +24,7 @@ For example describe this probrem by script. Test verson info is below.
 
 You may look error like below
 
-```python
+```cmd
 DevTools listening on ws://127.0.0.1:57646/devtools/browser/7ba36c8c-b0eb-4ee7-9e75-e15e254f71a2
 
 Traceback (most recent call last):
