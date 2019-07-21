@@ -4,9 +4,7 @@ create on : 2019/07/14
 project name : chromedriver_update_tool
 file name : ChromeVersionUpdateTool
 
-description : equalize chrome browser and driver version
-              if not equal version, download new chrome driver
-              to equolize version browser and driver version
+description : Update chrome driver to equalize chrome version
 
 """
 import subprocess
@@ -87,7 +85,7 @@ def check_browser_driver_version():
 
     browser_version_parse = ".".join(browser_version.split(".")[:-1])
 
-    print(browser_version_parse)
+    print("chrome browser version : {}".format(browser_version_parse))
 
     # get chrome driver version
     driver_cmd = [CHROME_DRIVER, "-version"]
@@ -100,7 +98,7 @@ def check_browser_driver_version():
 
     driver_version_parse = ".".join(driver_version.split(".")[:-1])
 
-    print(driver_version_parse)
+    print("chrome driver version : {}".format(driver_version_parse))
 
     # check both version
     if browser_version_parse == driver_version_parse:
@@ -161,7 +159,7 @@ def download_correctly_driver(target_version, proxy):
 
 
 def chromedriver_update(proxy=None):
-    """ update chrome driver to equalize browser version
+    """ Update chrome driver to equalize chrome version
 
     :param proxy: if you want to use proxy, set values string
                   non auth proxy set value: "http_proxy"
@@ -205,10 +203,10 @@ def main():
     result = chromedriver_update()
 
     if result:
-        print("Chrome Browser and Driver equalize OK!!!!!")
+        print("Chrome Browser and Driver update success")
 
     else:
-        print("Chrome Browser and Driver equalize FAILURE")
+        print("Chrome Browser and Driver update FAILURE")
 
 
 if __name__ == "__main__":
