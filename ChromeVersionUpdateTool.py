@@ -68,8 +68,7 @@ def check_browser_driver_version():
     """
 
     # get chrome browser version
-    browser_cmd = ["dir", "/B", "/O-N",
-                   r"C:\Program Files (x86)\Google\Chrome\Application"]
+    browser_cmd = ["dir", r"C:\Program Files (x86)\Google\Chrome\Application"]
 
     chrome_dir_stdout = subprocess.run(browser_cmd, stdout=subprocess.PIPE,
                                        stderr=subprocess.STDOUT, shell=True)
@@ -78,7 +77,8 @@ def check_browser_driver_version():
     chrome_dir = "-".join(chrome_dir_cp932.splitlines())
 
     if re.search(r"([0-9]+\.?)+", chrome_dir):
-        browser_version = re.search(r"([0-9]+\.?)+", chrome_dir).group()
+        browser_pattern = r"([0-9]+\.){3}([0-9]+)+\.?"
+        browser_version = re.search(browser_pattern, chrome_dir).group()
 
     else:
         browser_version = "0.0.0.0"
