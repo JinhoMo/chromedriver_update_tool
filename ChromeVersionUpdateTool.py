@@ -42,14 +42,18 @@ def get_internet_item(url, html=True):
     """
 
     if PROXY_MODE == "http_proxy":
-        http = ProxyManager(PROXY_URL_PORT)
+        http = ProxyManager(proxy_url=PROXY_URL_PORT)
 
     elif PROXY_MODE == "auth_proxy":
-        auth_proxy_headers = make_headers(proxy_basic_auth=PROXY_URL_PORT)
-        http = ProxyManager(PROXY_URL_PORT, headers=auth_proxy_headers)
+        auth_proxy_headers = make_headers(proxy_basic_auth=PROXY_BASIC_AUTH)
+        http = ProxyManager(proxy_url=PROXY_URL_PORT,
+                            proxy_headers=auth_proxy_headers,
+                            cert_reqs="CERT_REQUIRED",
+                            ca_certs=certifi.where())
 
     else:
-        http = PoolManager(cert_reqs="CERT_REQUIRED", ca_certs=certifi.where())
+        http = PoolManager(cert_reqs="CERT_REQUIRED",
+                           ca_certs=certifi.where())
 
     r = http.request("GET", url)
 
