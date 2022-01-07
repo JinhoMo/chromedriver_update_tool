@@ -17,6 +17,9 @@ import certifi
 from bs4 import BeautifulSoup
 from urllib3 import ProxyManager, make_headers, PoolManager
 
+import os
+import locale
+
 CHROME_DRIVER_DIR = "C:/SeleniumWebdriver/"
 CHROME_DRIVER_ZIP = "chromedriver_win32.zip"
 CHROME_DRIVER_EXE = "chromedriver.exe"
@@ -31,6 +34,8 @@ PROXY_BASIC_AUTH = "username:password"
 PROXY_URL_PORT = "http://your.own.proxy.url:8080"
 
 CHROME_DRIVER_DL_SITE = "http://chromedriver.chromium.org/downloads/"
+
+LOCAL_LANGUAGE_DECODE = locale.getdefaultlocale()[1]
 
 
 def get_internet_item(url, html=True):
@@ -81,7 +86,8 @@ def check_browser_driver_version():
     chrome_dir_stdout = subprocess.run(browser_cmd, stdout=subprocess.PIPE,
                                        stderr=subprocess.STDOUT, shell=True)
 
-    chrome_dir_cp932 = chrome_dir_stdout.stdout.decode("cp932")
+    chrome_dir_cp932 = chrome_dir_stdout.stdout.decode(LOCAL_LANGUAGE_DECODE)
+
     chrome_dir = "-".join(chrome_dir_cp932.splitlines())
 
     if re.search(r"([0-9]+\.?)+", chrome_dir):
@@ -100,8 +106,10 @@ def check_browser_driver_version():
 
     driver_stdout = subprocess.run(driver_cmd, stdout=subprocess.PIPE,
                                    stderr=subprocess.STDOUT, shell=True)
-    driver_stdout_cp932 = driver_stdout.stdout.decode("cp932")
+    driver_stdout_cp932 = driver_stdout.stdout.decode(LOCAL_LANGUAGE_DECODE)
     driver_stdout_str = "-".join(driver_stdout_cp932.splitlines())
+    print(driver_stdout_str)
+    print(re.search(r"([0-9]+\.?)+", driver_stdout_str))
     driver_version = re.search(r"([0-9]+\.?)+", driver_stdout_str).group()
 
     driver_version_parse = ".".join(driver_version.split(".")[:-1])
@@ -210,7 +218,6 @@ def main():
 
     else:
         print("Chrome Browser and Driver update FAILURE")
-
 
 if __name__ == "__main__":
     main()
