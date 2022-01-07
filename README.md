@@ -2,7 +2,7 @@
 
 ## Original
 
-If you want to check the original developing page for this project, please check the link below
+If you want to check the original development page for this project, please check the link below
 hytmachineworks/chromedriver_update_tool(https://github.com/hytmachineworks/chromedriver_update_tool)
 
 ## Description
